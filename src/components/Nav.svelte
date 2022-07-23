@@ -9,53 +9,68 @@
   const logout = async () => {
     authenticated.subscribe(async (value) => {
       if (value) {
-        await fetch("http://localhost:4000/api/online-course/sessions/logout", {
-          method: "DELETE",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/x-www-form-urlencoded",
-            Authorization: `${value}`,
-          },
-        })
+        await fetch(
+          "http://localhost:4000/api/manajemen_organisasi/sessions/logout",
+          {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/x-www-form-urlencoded",
+              Authorization: `${value}`,
+            },
+          }
+        )
           .then((response) => response.json())
           .then(async (responseJson) => {
             if (responseJson.metadata.http_code == "200") {
-              authenticated.set('');
+              authenticated.set("");
+              auth = "";
               await goto("/login");
-              auth = '';
             }
           })
           .catch((error) => {
             console.error(error);
-            token = "";
+            auth = "";
           });
       }
     });
   };
 </script>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-  <div class="container-fluid">
-    <a href="/" class="navbar-brand">Home</a>
-
-    <div>
-      {#if auth != ""}
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <!-- svelte-ignore a11y-invalid-attribute -->
-            <a href="#" class="nav-link" on:click={logout}>Logout</a>
-          </li>
-        </ul>
-      {:else}
-        <ul class="navbar-nav me-auto mb-2 mb-md-0">
-          <li class="nav-item">
-            <a href="/login" class="nav-link">Login</a>
-          </li>
-          <li class="nav-item">
-            <a href="/register" class="nav-link">Register</a>
-          </li>
-        </ul>
-      {/if}
+{#if auth != ""}
+  <header class="header" id="header">
+    <div class="header_toggle"></div>
+    <div class="header_img">
+      <img src="https://i.imgur.com/hczKIze.jpg" alt="" />
     </div>
+  </header>
+  <div class="l-navbar" id="nav-bar">
+    <nav class="nav">
+      <div>
+        <a href="/" class="nav_logo">
+          <i class="bx bx-layer nav_logo-icon" />
+          <span class="nav_logo-name">UAS</span>
+        </a>
+        <div class="nav_list">
+          <a href="/suborganisasi" class="nav_link">
+            <i class="bx bx-user nav_icon" />
+            <span class="nav_name">Sub Organisasi</span>
+          </a>
+          <a href="/user/anggota" class="nav_link">
+            <i class="bx bx-user nav_icon" />
+            <span class="nav_name">User</span>
+          </a>
+          <a href="/activity" class="nav_link">
+            <i class="bx bx-bookmark nav_icon" />
+            <span class="nav_name">Activity</span>
+          </a>
+        </div>
+      </div>
+      <!-- svelte-ignore a11y-invalid-attribute -->
+      <a href="#" class="nav_link" on:click={logout}>
+        <i class="bx bx-log-out nav_icon" />
+        <span class="nav_name">SignOut</span>
+      </a>
+    </nav>
   </div>
-</nav>
+{/if}

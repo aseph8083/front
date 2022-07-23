@@ -1,9 +1,9 @@
 <script>
-    import Nav from '../components/Nav.svelte';
+  import Nav from "../components/Nav.svelte";
 </script>
 
-<!-- <Nav/> -->
+<Nav />
 
-<main>
-    <slot></slot>
+<main class="main-data">
+  <slot />
 </main>

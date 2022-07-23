@@ -1,9 +1,9 @@
 <script>
   import { onMount } from "svelte";
   import { authenticated } from "../stores/auth";
+  import Activity from "./activity/index.svelte";
 
-  let message = "",
-    id = "",
+  let id = "",
     first_name = "",
     last_name = "",
     email = "",
@@ -20,7 +20,7 @@
               headers: {
                 Accept: "application/json",
                 "Content-Type": "application/x-www-form-urlencoded",
-                "Authorization": `${value}`,
+                Authorization: `${value}`,
               },
             }
           )
@@ -38,55 +38,16 @@
               console.error(error);
               token = "";
             });
+        } else {
+          window.location.href = "/login";
         }
       });
-      message = "You are not logged in";
-      window.location.href = '/login';
     } catch (e) {
-      message = "You are not logged in";
       authenticated.set("");
       token = "";
-      window.location.href = '/login';
+      window.location.href = "/login";
     }
   });
 </script>
 
-{#if token != ""}
-  <h2>Data User</h2>
-
-  <table class="text-center">
-    <tr>
-      <th>id</th>
-      <th>Nama Depan</th>
-      <th>Nama Belakang</th>
-      <th>Email</th>
-    </tr>
-    <tr>
-      <td>{id}</td>
-      <td>{first_name}</td>
-      <td>{last_name}</td>
-      <td>{email}</td>
-    </tr>
-  </table>
-{:else}
-  <h2 class="text-center">{message}</h2>
-{/if}
-
-<style>
-  table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-  }
-
-  td,
-  th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #dddddd;
-  }
-</style>
+<Activity/>
