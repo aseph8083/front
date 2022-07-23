@@ -64,6 +64,10 @@
             <i class="bx bx-bookmark nav_icon" />
             <span class="nav_name">Activity</span>
           </a>
+          <a href="/activity" class="nav_link">
+            <i class="bx bx-bookmark nav_icon" />
+            <span class="nav_name">Activity</span>
+          </a>
         </div>
       </div>
       <!-- svelte-ignore a11y-invalid-attribute -->
